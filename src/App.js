@@ -5,9 +5,7 @@ import Time from './Time.js'
 import Announcements from './Announcements.js'
 import Leaderboard from './Leaderboard.js'
 import bitcamp_logo from './assets/logotype.png'
-import { Row, Col } from 'antd';
-
-import { Layout } from 'antd';
+import { Row, Col, Layout } from 'antd';
 
 const { Header, Content } = Layout;
 

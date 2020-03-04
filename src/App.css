@@ -90,10 +90,6 @@
   src: local('Avenir LT Std 95 Black Oblique'), url('./assets/fonts/AvenirLTStd-BlackOblique.woff') format('woff');
 }
 
-/* .App {
-  text-align: center;
-} */
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -106,6 +102,7 @@
 }
 
 .App {
+  /* text-align: center; */
   /* font-family: 'Avenir LT Std 85 Heavy'; */
   /* background-color: #1A2E33; */
   background-color: #EBEAE6;

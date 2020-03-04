@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import { List, Avatar } from 'antd';
+import { List, Avatar, Card, Divider } from 'antd';
 import fire from './assets/fire.gif'
 import moment from 'moment';
-import { Typography } from 'antd';
-
-import { Card } from 'antd';
-import { Divider } from 'antd';
 
 import announcementLogo from './assets/announcements.svg'
 
-const { Title, Paragraph, Text } = Typography;
 const { Meta } = Card;
 
 class Announcements extends Component{

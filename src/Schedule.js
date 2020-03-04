@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import Tabletop from 'tabletop';
-import { Typography } from 'antd';
-import { Spin, Icon } from 'antd';
-import { Card } from 'antd';
-import { Divider } from 'antd';
-import { List, Avatar } from 'antd';
+import { Spin, Icon, Card, Divider, List, Avatar } from 'antd';
 import moment from 'moment';
 import scheduleLogo from './assets/schedule.svg'
 import fire from './assets/fire.gif'
@@ -12,7 +8,6 @@ import fire from './assets/fire.gif'
 const { Meta } = Card;
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
-const { Title, Paragraph, Text } = Typography;
 
 class Schedule extends Component{
     
@@ -108,17 +103,33 @@ class Schedule extends Component{
 
     render(){
 
-        if(this.state.data.length === 0){
-            return(
-                <div>
-                    <Spin indicator={antIcon} />
-                    <h3 style={{color: '1A2E33'}}>Loading</h3>
-                </div>
-            )
-           
-        }
+        let contents;
 
-        let res = this.filterEvents();
+        if(this.state.data.length === 0){
+            
+            contents = <div style={{textAlign:'center'}}>
+                            <Spin indicator={antIcon} />
+                            <h3 style={{color: '1A2E33'}}>Loading</h3>
+                        </div>
+               
+        }
+        else{
+
+            let res = this.filterEvents();
+            contents = <List
+                            itemLayout="horizontal"
+                            dataSource={this.getEventData(res[1],true).concat(this.getEventData(res[2],false))}
+                            renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                avatar={<Avatar src={fire} />}
+                                title={<h2 style={{color : '#1A2E33 ',fontFamily: 'Avenir LT Std 55 Roman'}}>{item.title}</h2>}
+                                description={<h4 style={{color : '#1A2E33 ',fontFamily: 'Avenir LT Std 55 Roman'}}>{item.description}</h4>}
+                                />
+                            </List.Item>
+                            )}
+                        />
+        }
 
         return (
 
@@ -129,19 +140,8 @@ class Schedule extends Component{
                 />
                 {/* <Divider style={{marginBottom:'5%',marginTop:'1%'}}/> */}
                 <Divider/>
-                <List
-                    itemLayout="horizontal"
-                    dataSource={this.getEventData(res[1],true).concat(this.getEventData(res[2],false))}
-                    renderItem={item => (
-                    <List.Item>
-                        <List.Item.Meta
-                        avatar={<Avatar src={fire} />}
-                        title={<h2 style={{color : '#1A2E33 ',fontFamily: 'Avenir LT Std 55 Roman'}}>{item.title}</h2>}
-                        description={<h4 style={{color : '#1A2E33 ',fontFamily: 'Avenir LT Std 55 Roman'}}>{item.description}</h4>}
-                        />
-                    </List.Item>
-                    )}
-                />
+                
+                {contents}
     
             </Card>
         );

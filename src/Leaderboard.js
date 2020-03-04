@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 
-import { Card } from 'antd';
-import { Divider } from 'antd';
+import { Card, Divider, Row } from 'antd';
 
-import { Row, Col } from 'antd';
 import redLogo from './assets/RedTeamLogo.png'
 import greenLogo from './assets/GreenTeamLogo.png'
 import blueLogo from './assets/BlueTeamLogo.png'
 import leaderboardLogo from './assets/leaderboard.svg'
-import { Typography } from 'antd';
 import Team from './Team.js'
 
-const { Title, Paragraph, Text } = Typography;
 const { Meta } = Card;
 
 class Leaderboard extends Component{
@@ -48,21 +44,10 @@ class Leaderboard extends Component{
 
                 <div>
                     <Row>
-                        {/* <Col span={6}/>
-                        <Col span={12}>
-                        <Team logo={blueLogo} team="Blue" points={this.state.bluePoints} outerColor="gold"/>
-                        </Col>
-                        <Col span={6}/> */}
                         <Team logo={blueLogo} team="Blue" points={this.state.bluePoints} outerLeftColor="#FFDD29" outerRightColor="#FDB040" innerColor="#FFF0CE"/>
                     </Row>
                     <Row>
                         <Team logo={redLogo} team="Red" points={this.state.redPoints} outerLeftColor="#F0EFF5" outerRightColor="#8D9093" innerColor="#F4F4F4"/>
-                        {/* <Col span={12}>
-                        <Team logo={redLogo} team="Red" points={this.state.redPoints} outerColor="silver"/>
-                        </Col>
-                        <Col span={12}>
-                        <Team logo={blueLogo} team="Green" points={this.state.greenPoints} outerColor="#cd7f32"/>
-                        </Col> */}
                     </Row>
                     <Row>
                         <Team logo={greenLogo} team="Green" points={this.state.greenPoints} outerLeftColor="#FFA15C" outerRightColor="#925401" innerColor="#E5D4C0"/>
