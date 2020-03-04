@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import Tabletop from 'tabletop';
-import { Timeline,Typography } from 'antd';
+import { Typography } from 'antd';
 import { Spin, Icon } from 'antd';
+import { Card } from 'antd';
+import { Divider } from 'antd';
+import { List, Avatar } from 'antd';
+import moment from 'moment';
+import scheduleLogo from './assets/schedule.svg'
+import fire from './assets/fire.gif'
+
+const { Meta } = Card;
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 const { Title, Paragraph, Text } = Typography;
@@ -76,11 +84,10 @@ class Schedule extends Component{
         return [passed, current, future]
     }
 
-    displayEvents(events, passed, color){
+    getEventData(events, flag){
         
-        let components = []
-        let day_map = {0:'Sunday',1:'Monday',2:'Tuesday',3:'Wednesday',4:'Thursday',5:'Friday',6:'Saturday'}
-
+        let data = []
+       
         for(let i = 0; i < events.length; i++){
             let item = events[i]
 
@@ -88,28 +95,15 @@ class Schedule extends Component{
             let startDate = new Date(item[this.state.columnNames[6]])
             let endDate = new Date(item[this.state.columnNames[11]])
             
-            let text = ""
-
-            if(startDate.getDay() == endDate.getDay()){
-                text = title + ": " + day_map[startDate.getDay()] + " " + startDate.toLocaleTimeString() + " - " + endDate.toLocaleTimeString()
-            }
-            else{
-                text = title + ": " + day_map[startDate.getDay()] + " " + startDate.toLocaleTimeString() + " - " + day_map[endDate.getDay()] + " " + endDate.toLocaleTimeString()
-            }
-
-            if(passed){
-                components.push(
-                    <Timeline.Item key={i}><strike style={{color : color}}>{text}</strike></Timeline.Item>
-                )
-            }
-            else{
-                components.push(
-                    <Timeline.Item key={i}><Text style={{color : color}}>{text}</Text></Timeline.Item>
-                )
-            }
+            let text = (flag ? "Now" : moment(startDate).format('LT')) + " - " + moment(endDate).format('LT')
+           
+            data.push(
+                {title:title,description:text}
+            )
+            
         }
 
-        return components
+        return data
     }
 
     render(){
@@ -118,7 +112,7 @@ class Schedule extends Component{
             return(
                 <div>
                     <Spin indicator={antIcon} />
-                    <h3 style={{color: 'white'}}>Loading</h3>
+                    <h3 style={{color: '1A2E33'}}>Loading</h3>
                 </div>
             )
            
@@ -128,24 +122,28 @@ class Schedule extends Component{
 
         return (
 
-            <div>
-                <h2 style={{color: 'white'}}>Schedule</h2>
-                <br></br>
-
-                <Timeline>
-                    
-                    {
-                        this.displayEvents(res[0],true,'white')
-                    }
-                    {
-                        this.displayEvents(res[1],false,'#FF6F3F')
-                    }
-                    {
-                        this.displayEvents(res[2],false,'#FF3F46')
-                    }
-
-                </Timeline>
-            </div>
+            <Card bordered={true} style={{ backgroundColor:'white', borderRadius:'15px', marginLeft: '10%', marginRight:'5%',marginTop:'10%', height:'90%'}}>
+                <Meta
+                    title={<div><img src={scheduleLogo} style={{height:'12%',width:'12%', float:'left'}}/><h1 style={{color:"#1A2E33", paddingLeft:'30%',fontFamily: 'Aleo'}}><b>Schedule</b></h1></div>}
+                    style={{color:'#1A2E33'}}
+                />
+                {/* <Divider style={{marginBottom:'5%',marginTop:'1%'}}/> */}
+                <Divider/>
+                <List
+                    itemLayout="horizontal"
+                    dataSource={this.getEventData(res[1],true).concat(this.getEventData(res[2],false))}
+                    renderItem={item => (
+                    <List.Item>
+                        <List.Item.Meta
+                        avatar={<Avatar src={fire} />}
+                        title={<h2 style={{color : '#1A2E33 ',fontFamily: 'Avenir LT Std 55 Roman'}}>{item.title}</h2>}
+                        description={<h4 style={{color : '#1A2E33 ',fontFamily: 'Avenir LT Std 55 Roman'}}>{item.description}</h4>}
+                        />
+                    </List.Item>
+                    )}
+                />
+    
+            </Card>
         );
     }
 }
